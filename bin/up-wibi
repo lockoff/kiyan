@@ -1,0 +1,4 @@
+#!/bin/bash
+
+vpndir=/home/kiyan/lib/vpn/odiago-vpn
+sudo openvpn --script-security 3 system --config ${vpndir}/client.ovpn

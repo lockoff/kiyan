@@ -1,0 +1,54 @@
+#!/bin/bash - 
+#===============================================================================
+#
+#          FILE: mvn-eclipse.sh
+# 
+#         USAGE: ./mvn-eclipse.sh 
+# 
+#   DESCRIPTION: Convenience script for running mvn elipse:eclipse or mvn eclipse:clean 
+# 
+#       OPTIONS: -c Runs mvn eclipse:clean instead of mvn eclipse:eclipse 
+#  REQUIREMENTS: maven 
+#          BUGS: ---
+#         NOTES: ---
+#        AUTHOR: Kiyan Ahmadizadeh (kiyan), kiyan@odiago.com
+#  ORGANIZATION: Odiago, Inc.
+#       CREATED: 01/30/2012 07:56:41 PM PST
+#      REVISION: 1 
+#===============================================================================
+CLEAN=
+usage()
+{
+cat <<EOF
+usage: $0 [-c] [-h]
+Runs the mvn eclipse:eclipse command.
+Use -c to run mvn eclipse:clean instead.
+Use -h to view this help message.
+EOF
+}
+
+while getopts "ch" OPTION
+do
+	case $OPTION in
+		h)
+			usage
+			exit 1
+			;;
+		c)
+			CLEAN="yes"
+			;;
+		?)
+			usage
+			exit 1
+	esac
+done
+	  
+if [ -z "$CLEAN" ]
+then
+	CMD="mvn eclipse:eclipse -DdownloadSources -DdownloadJavadocs"
+else
+	CMD="mvn eclipse:clean"
+fi
+echo "Running command ${CMD}"
+exec ${CMD}
+

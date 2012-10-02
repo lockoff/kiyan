@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+# Arguments -t <test> -f
+
+usage()
+{
+cat <<EOF
+Run maven test command.
+usage: $0 [OPTIONS]
+
+OPTIONS
+ -t <test> Specify the name of a test to run.
+ -f Redirect test output to a file.
+ -h Display this usage.
+EOF
+}
+
+TEST_NAME=
+REDIRECT=
+while getopts "ht:f" OPTION
+do
+  case $OPTION in
+    h)
+      usage
+      exit 1
+      ;;
+    t)
+      TEST_NAME=${OPTARG}
+      ;;
+    f)
+      REDIRECT="yes"
+      ;;
+    ?)
+      usage
+      exit
+      ;;
+  esac
+done
+
+MVN_CMD="mvn test"
+if [ -n "${TEST_NAME}" ]
+then
+  MVN_CMD="${MVN_CMD} -Dtest=${TEST_NAME}" 
+fi
+if [ -z "${REDIRECT}" ]
+then
+  MVN_CMD="${MVN_CMD} -DredirectTestOutputToFile=false"
+fi
+echo ${MVN_CMD}
+exec ${MVN_CMD}
+
+
