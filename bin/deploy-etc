@@ -4,8 +4,8 @@
 
 set -e
 
-bin=`readlink -f $0`
-bin=`dirname ${bin}`
+##bin=`readlink $0`
+bin=`dirname ${0}`
 bin=`cd ${bin} && pwd`
 
 etcdir=`cd ${bin}/../etc && pwd`

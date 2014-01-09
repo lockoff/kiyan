@@ -1,9 +1,0 @@
-#!/bin/bash
-isrunning=`ps -ef | grep /eclimd | grep -v grep`
-if [ ! -z "$CANCEL_ECLIMD" ]; then
-  exit 0
-fi
-if [ -z "$isrunning" ]; then
-  start-eclimd
-fi
-
